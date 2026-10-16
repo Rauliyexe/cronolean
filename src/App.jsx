@@ -12,13 +12,25 @@ import { SettingsView } from './views/SettingsView';
 
 import { LiveStopwatchModal } from './components/LiveStopwatchModal';
 import { PrintSheetModal } from './components/PrintSheetModal';
+import { PwaBanner } from './components/PwaBanner';
 
 import { INITIAL_SUBCONJUNTOS, DEFAULT_VERB_DICTIONARY, DEFAULT_COMPLEMENTS_CATALOG } from './data/defaultData';
 import { calculateTaktMetrics, calculateLeanMetrics, classifyTask } from './utils/leanEngine';
 
 export default function App() {
-  // Navigation & UI state
-  const [activeView, setActiveView] = useState('overview');
+  // Navigation & UI state with PWA deep-linking support
+  const [activeView, setActiveView] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const view = params.get('view');
+      if (view && ['overview', 'stopwatch', 'tasks', 'yamazumi', 'analytics', 'dictionary', 'importexport', 'settings'].includes(view)) {
+        return view;
+      }
+    } catch (e) {
+      // fallback
+    }
+    return 'overview';
+  });
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
@@ -290,6 +302,9 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      {/* PWA Offline & Update Notification Banner */}
+      <PwaBanner />
+
       {/* Mobile Drawer Backdrop */}
       {isMobileSidebarOpen && (
         <div

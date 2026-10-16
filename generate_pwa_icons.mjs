@@ -1,0 +1,178 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import sharp from 'sharp';
+
+const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="35%" r="75%" fx="40%" fy="25%">
+      <stop offset="0%" stop-color="#151e34" />
+      <stop offset="60%" stop-color="#0a0f1d" />
+      <stop offset="100%" stop-color="#050811" />
+    </radialGradient>
+
+    <!-- Cyan Neon Accent -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Purple/Violet Energy -->
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+
+    <!-- Amber Alert -->
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+
+    <!-- Glass Rim Glow -->
+    <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.35)" />
+      <stop offset="50%" stop-color="rgba(0, 240, 255, 0.15)" />
+      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
+    </linearGradient>
+
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="116" fill="none" stroke="url(#rimGrad)" stroke-width="2.5" />
+
+  <!-- Outer Stopwatch Crown / Pushers -->
+  <!-- Top Crown Base -->
+  <rect x="236" y="52" width="40" height="32" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="3" />
+  <rect x="220" y="40" width="72" height="18" rx="8" fill="url(#cyanGrad)" />
+
+  <!-- Top-Right Lap Pusher -->
+  <g transform="rotate(35 385 125)">
+    <rect x="365" y="105" width="28" height="22" rx="5" fill="#1e293b" stroke="#c084fc" stroke-width="2.5" />
+    <rect x="355" y="96" width="48" height="14" rx="6" fill="url(#purpleGrad)" />
+  </g>
+
+  <!-- Top-Left Mode Pusher -->
+  <g transform="rotate(-35 127 125)">
+    <rect x="119" y="105" width="28" height="22" rx="5" fill="#1e293b" stroke="#fbbf24" stroke-width="2.5" />
+    <rect x="109" y="96" width="48" height="14" rx="6" fill="url(#amberGrad)" />
+  </g>
+
+  <!-- Dial Outer Housing Ring -->
+  <circle cx="256" cy="286" r="172" fill="#0c1322" stroke="#1e293b" stroke-width="14" />
+  <circle cx="256" cy="286" r="165" fill="none" stroke="url(#cyanGrad)" stroke-width="3.5" opacity="0.8" />
+
+  <!-- Gauge Arc Segment (Lean Yamazumi / VA vs NVA representation) -->
+  <!-- VA arc (Cyan) -->
+  <circle cx="256" cy="286" r="142" fill="none" stroke="url(#cyanGrad)" stroke-width="12"
+          stroke-dasharray="450 900" stroke-linecap="round" filter="url(#neonGlow)" />
+  
+  <!-- NVA / Muda arc (Purple) -->
+  <circle cx="256" cy="286" r="142" fill="none" stroke="url(#purpleGrad)" stroke-width="8"
+          stroke-dasharray="160 900" stroke-dashoffset="-490" stroke-linecap="round" />
+
+  <!-- Dial Inner Track -->
+  <circle cx="256" cy="286" r="124" fill="#070b14" stroke="#151f32" stroke-width="2" />
+
+  <!-- Precise Tick Marks around dial -->
+  <!-- 12 major ticks -->
+  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round" opacity="0.75">
+    <line x1="256" y1="172" x2="256" y2="186" />
+    <line x1="256" y1="400" x2="256" y2="386" />
+    <line x1="142" y1="286" x2="156" y2="286" />
+    <line x1="370" y1="286" x2="356" y2="286" />
+
+    <line x1="175" y1="205" x2="185" y2="215" />
+    <line x1="337" y1="205" x2="327" y2="215" />
+    <line x1="175" y1="367" x2="185" y2="357" />
+    <line x1="337" y1="367" x2="327" y2="357" />
+  </g>
+
+  <!-- Digital Lean Display / Takt indicator panel -->
+  <rect x="186" y="222" width="140" height="38" rx="8" fill="#0d1726" stroke="#0284c7" stroke-width="1.5" />
+  <text x="256" y="247" font-family="'JetBrains Mono', monospace, sans-serif" font-size="16" font-weight="700"
+        fill="#00f0ff" text-anchor="middle" letter-spacing="2">TAKT 45s</text>
+
+  <!-- Stopwatch Needle (Precision Engineered) -->
+  <!-- Counterweight -->
+  <circle cx="256" cy="286" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="3" />
+  <circle cx="256" cy="286" r="6" fill="#00f0ff" />
+  
+  <!-- Needle Arm pointing towards ~10 o'clock high performance -->
+  <g transform="rotate(-52 256 286)">
+    <polygon points="253,286 256,180 259,286" fill="url(#cyanGrad)" filter="url(#neonGlow)" />
+    <!-- Center needle highlight line -->
+    <line x1="256" y1="286" x2="256" y2="178" stroke="#ffffff" stroke-width="1.8" />
+    <!-- Rear counterweight pointer -->
+    <rect x="253.5" y="286" width="5" height="24" rx="2" fill="#0284c7" />
+  </g>
+
+  <!-- Modern LEAN Badge at bottom -->
+  <g transform="translate(186, 332)">
+    <rect width="140" height="28" rx="6" fill="rgba(0, 240, 255, 0.12)" stroke="rgba(0, 240, 255, 0.4)" stroke-width="1" />
+    <text x="70" y="19" font-family="'Inter', sans-serif" font-size="12" font-weight="800"
+          fill="#38bdf8" text-anchor="middle" letter-spacing="3">CRONOLEAN</text>
+  </g>
+</svg>`;
+
+const maskableSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="mBg" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#151e34" />
+      <stop offset="100%" stop-color="#050811" />
+    </radialGradient>
+  </defs>
+  <!-- Full square background for maskable safe zone -->
+  <rect width="512" height="512" fill="url(#mBg)" />
+  <!-- Nested scaled icon content inside 80% safe area -->
+  <g transform="translate(51.2, 51.2) scale(0.8)">
+    ${svgIcon.replace(/<\/?svg[^>]*>/g, '')}
+  </g>
+</svg>`;
+
+async function generate() {
+  const publicDir = path.resolve('public');
+  
+  // 1. Save main SVG
+  fs.writeFileSync(path.join(publicDir, 'favicon.svg'), svgIcon);
+  fs.writeFileSync(path.join(publicDir, 'pwa-icon.svg'), svgIcon);
+  
+  // 2. Generate 192x192 PNG
+  await sharp(Buffer.from(svgIcon))
+    .resize(192, 192)
+    .png()
+    .toFile(path.join(publicDir, 'pwa-192x192.png'));
+  console.log('✓ Created pwa-192x192.png');
+
+  // 3. Generate 512x512 PNG
+  await sharp(Buffer.from(svgIcon))
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(publicDir, 'pwa-512x512.png'));
+  console.log('✓ Created pwa-512x512.png');
+
+  // 4. Generate Apple Touch Icon 180x180
+  await sharp(Buffer.from(svgIcon))
+    .resize(180, 180)
+    .png()
+    .toFile(path.join(publicDir, 'apple-touch-icon.png'));
+  console.log('✓ Created apple-touch-icon.png');
+
+  // 5. Generate Maskable Icon 512x512
+  await sharp(Buffer.from(maskableSvg))
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(publicDir, 'pwa-maskable-512x512.png'));
+  console.log('✓ Created pwa-maskable-512x512.png');
+}
+
+generate().catch(console.error);

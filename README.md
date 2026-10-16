@@ -6,6 +6,8 @@
 
 ## 🚀 Funcionalidades Principais
 
+- 📱 **Progressive Web App (PWA 100% Offline)**: Instale como aplicativo nativo no celular (Android/iOS) ou no desktop (Chrome/Edge/Windows). Opera continuamente mesmo sem sinal de internet no chão de fábrica, com persistência local garantida.
+- ⚡ **Atalhos Rápidos de App**: Acesso direto pela tela inicial do celular ao Cronômetro Industrial, aos Gráficos Yamazumi e à Matriz de Tempos.
 - 📊 **Dashboard Lean & Visão Geral**: Métricas consolidadas de tempo de ciclo total, Takt Time, eficiência da linha e taxa de agregação de valor.
 - 📉 **Gráficos Yamazumi Dinâmicos**: Visualização gráfica das estações de trabalho e subconjuntos, destacando visualmente sobrecargas em relação ao Takt Time.
 - ⏱️ **Cronômetro Industrial Multi-Volta**: Cronometragem precisa com captura de voltas (laps), aplicação de fator de ritmo (%) e tolerâncias ergonômicas/fadiga.
@@ -20,8 +22,9 @@
 
 - **React 19**
 - **Vite**
+- **Vite Plugin PWA & Workbox** (Service Worker, Web App Manifest & Cache Offline)
 - **Vanilla CSS / Design System Industrial** (Dark theme com estética aeroespacial/manufatura avançada)
-- **SVG / Canvas Charts**
+- **ECharts & SVG Engine**
 
 ---
 

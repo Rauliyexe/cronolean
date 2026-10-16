@@ -9,6 +9,7 @@ import {
   AlertTriangle,
   Menu
 } from 'lucide-react';
+import { PwaInstallButton } from './PwaBanner';
 
 export function Topbar({
   activeView,
@@ -95,6 +96,8 @@ export function Topbar({
 
       {/* Right: Quick Action Controls */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <PwaInstallButton />
+
         <button
           onClick={onOpenStopwatch}
           className="ind-btn ind-btn-primary ind-btn-sm"
