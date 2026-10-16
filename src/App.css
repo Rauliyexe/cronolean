@@ -1,0 +1,18 @@
+/* Responsive helpers and specific layout tweaks */
+
+@media (max-width: 900px) {
+  .no-mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-container {
+    padding: 0.75rem !important;
+  }
+
+  .modal-content {
+    max-height: 98vh;
+    padding: 0;
+  }
+}
