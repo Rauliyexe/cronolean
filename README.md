@@ -1,16 +1,54 @@
-# React + Vite
+# ⏱️ CronoLean — Plataforma de Cronoanálise Industrial & Balanceamento Lean
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**CronoLean** é uma plataforma web moderna, desenvolvida para engenharia industrial e equipes de melhoria contínua (Lean Manufacturing). Oferece cronometragem em tempo real, cálculo automatizado de Takt Time, classificação de agregação de valor (VA / NVA / BVA), gráficos Yamazumi dinâmicos, análise de Pareto de desperdícios e importação/exportação com dicionário de verbos operacionais padronizados.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Funcionalidades Principais
 
-## React Compiler
+- 📊 **Dashboard Lean & Visão Geral**: Métricas consolidadas de tempo de ciclo total, Takt Time, eficiência da linha e taxa de agregação de valor.
+- 📉 **Gráficos Yamazumi Dinâmicos**: Visualização gráfica das estações de trabalho e subconjuntos, destacando visualmente sobrecargas em relação ao Takt Time.
+- ⏱️ **Cronômetro Industrial Multi-Volta**: Cronometragem precisa com captura de voltas (laps), aplicação de fator de ritmo (%) e tolerâncias ergonômicas/fadiga.
+- 📋 **Gestão de Operações & Balanceamento**: Tabela completa com cálculo de tempos padrão ($Tempo\ Padrão = Tempo\ Observado \times \frac{Ritmo}{100} \times (1 + Tolerâncias)$).
+- 🏷️ **Dicionário de Verbos Lean**: Identificação e classificação automática de tarefas por padrões industriais (ex: *Apertar*, *Inspecionar*, *Aguardar*, *Buscar*).
+- 🔄 **Importação & Exportação CSV Inteligente**: Compatibilidade total com planilhas Excel e separadores padrão industrial (`;` e `,`).
+- 🖨️ **Folha de Cronoanálise para Impressão**: Layout pronto e otimizado para auditorias de campo e chão de fábrica.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠️ Tecnologias Utilizadas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- **React 19**
+- **Vite**
+- **Vanilla CSS / Design System Industrial** (Dark theme com estética aeroespacial/manufatura avançada)
+- **SVG / Canvas Charts**
+
+---
+
+## 💻 Como Rodar o Projeto
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/Rauliyexe/cronolean.git
+   cd cronolean
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+   Para expor na rede local (Wi-Fi/LAN para celulares ou tablets no chão de fábrica):
+   ```bash
+   npm run dev -- --host
+   ```
+
+---
+
+Desenvolvido com foco em alta produtividade, rigor ergonômico e engenharia Lean.
+
